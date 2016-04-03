@@ -38,7 +38,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:id="@+id/main_btn_submit"
-            android:onClick="@{Model.submit()}"/>
+            android:onClick="@{Model.addNewTodoItem()}"/>
 
 
     </RelativeLayout>

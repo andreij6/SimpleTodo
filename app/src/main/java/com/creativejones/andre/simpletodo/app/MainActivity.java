@@ -12,25 +12,29 @@ import icepick.Icepick;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding mBinding;
-
     TodoVM mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Icepick.restoreInstanceState(this, savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mViewModel = TodoVM.createSetup(this, mBinding, savedInstanceState);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mBinding.setModel(mViewModel);
+        mViewModel = TodoVM.createSetup(this, binding, savedInstanceState);
+
+        binding.setModel(mViewModel);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         mViewModel.saveInstanceState(outState);
+
         Icepick.saveInstanceState(this, outState);
     }
+
+
 }
