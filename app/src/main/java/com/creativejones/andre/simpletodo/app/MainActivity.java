@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Icepick.restoreInstanceState(this, savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mViewModel = savedInstanceState != null ? TodoVM.recreate(this, mBinding, savedInstanceState) : TodoVM.createSetup(this, mBinding);
+        mViewModel = TodoVM.createSetup(this, mBinding, savedInstanceState);
 
         mBinding.setModel(mViewModel);
     }

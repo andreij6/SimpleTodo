@@ -3,6 +3,7 @@ package com.creativejones.andre.simpletodo.viewmodels;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class TodoVM {
 
     private static final String TAG = TodoVM.class.getSimpleName();
+
     public static final String TODO_ITEMS_KEY = "todo_items";
 
     //region Properties
@@ -23,16 +25,12 @@ public class TodoVM {
     //endregion
 
     //region Static Factories
-    public static TodoVM createSetup(Context context, ActivityMainBinding binding){
+    public static TodoVM createSetup(Context context, ActivityMainBinding binding, Bundle savedInstanceState){
         TodoVM result = new TodoVM(context, binding);
-        result.initialize();
-        return result;
-    }
 
-    public static TodoVM recreate(Context context, ActivityMainBinding binding, Bundle savedInstanceState) {
-        TodoVM result = TodoVM.createSetup(context, binding);
-        addTodoItems(result, savedInstanceState);
-        return result;
+        if(savedInstanceState != null) addTodoItems(result, savedInstanceState);
+
+        return result.build();
     }
     //endregion
 
@@ -74,7 +72,6 @@ public class TodoVM {
     //region Helpers
     private void setItems(ArrayList<String> _items) {
         items = _items;
-        mAdapter.addAll(items);
     }
 
     private boolean isTaskInputValid(String userInput){
@@ -98,10 +95,27 @@ public class TodoVM {
         }
     }
 
-    private void initialize() {
+    private TodoVM build() {
         mAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, items);
 
         mBinding.listView2.setAdapter(mAdapter);
+
+        setRemoveTaskOnLongItemClick();
+
+        return this;
+    }
+
+    private void setRemoveTaskOnLongItemClick() {
+        mBinding.listView2.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                mAdapter.remove(items.get(position));
+
+                mAdapter.notifyDataSetChanged();
+
+                return true;
+            }
+        });
     }
     //endregion
 }
