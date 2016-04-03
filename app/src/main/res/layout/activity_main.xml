@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="Model"
+            type="com.creativejones.andre.simpletodo.viewmodels.TodoVM"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".app.MainActivity">
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:id="@+id/listView2"
+            android:layout_above="@+id/main_et_iteminput"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Add a new Task"
+            android:ems="10"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/main_btn_submit"
+            android:id="@+id/main_et_iteminput"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/main_btn_submit"
+            android:onClick="@{Model.submit()}"/>
+
+
+    </RelativeLayout>
+
+</layout>
+
